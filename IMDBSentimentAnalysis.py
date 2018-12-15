@@ -1,17 +1,17 @@
-import pandas as pd 
-from pandas import DataFrame, read_csv
-import numpy as np 
-import os
-import csv 
-from sklearn.linear_model import SGDClassifier 
-from sklearn.feature_extraction.text import TfidfTransformer 
-import time
+
+"""
+Created on Fri Dec 14 19:52:40 2018
+
+@author: samirkarmacharya
+"""
 
 
-# AIM: RETRIEVES THE IMDB DATASET, DOES THE PREPROCESSING AND APPLIES VARIOUS MODELS 
 
-train_path = "aclImdb/train/" # source data
-test_path = "test/imdb_te.csv" # test data for grade evaluation. 
+
+
+
+training_dataset = r"/Users/samirkarmacharya/Documents/UIUC/CS410/Project/IMDB Dataset/aclImdb/train/" # source data
+testing_dataset = r"/Users/samirkarmacharya/Documents/UIUC/CS410/Project/IMDB Dataset/aclImdb/test/testing_dataset.csv" # test data for grade evaluation. 
 
 '''
 IMDB_DATA_PREPROCESS explores the neg and pos folders from aclImdb/train and creates a output_file in the required format
@@ -20,7 +20,7 @@ Outpath - Path were the file has to be saved
 Name  - Name with which the file has to be saved 
 Mix - Used for shuffling the data 
 '''
-def imdb_data_preprocess(inpath, outpath="./", name="imdb_tr.csv", mix=False):
+def imdb_data_preprocess(inpath, outpath="./", name="training_dataset.csv", mix=False):
 	import pandas as pd 
 	from pandas import DataFrame, read_csv
 	import os
@@ -113,14 +113,16 @@ RETRIEVE_DATA takes a CSV file as the input and returns the corresponding arrays
 Name - Name of the csv file 
 Train - If train is True, both the data and labels are returned. Else only the data is returned 
 '''
-def retrieve_data(name="imdb_tr.csv", train=True):
+def retrieve_data(name="training_dataset.csv", train=True):
 	import pandas as pd 
 	data = pd.read_csv(name,header=0, encoding = 'ISO-8859-1')
 	X = data['text']
+
 	
 	if train:
 		Y = data['polarity']
 		return X, Y
+    
 
 	return X		
 
@@ -152,81 +154,83 @@ def accuracy(Ytrain, Ytest):
 	return (num*100)/n
 
 
-'''
-WRITE_TXT writes the given data to a text file 
-Data - Data to be written to the text file 
-Name - Name of the file 
-'''
-def write_txt(data, name):
-	data = ''.join(str(word) for word in data)
-	file = open(name, 'w')
-	file.write(data)
-	file.close()
-	pass 
+
+
+'''Write_txt function reads the test data and outputs a csv file with
+columns, ID, Reiview, Polarity'''
+def write_txt(data, name, inpath = testing_dataset):
+    import pandas as pd
+    #data = ''.join(str(word) for word in data)
+    DataFrame = pd.read_csv(inpath,header=0, encoding = 'ISO-8859-1')
+    DataFrame["polarity"]= data
+    DataFrame.to_csv(name, sep= ',', index = False, header =['Row_Num','Review','Polarity'])
+    pass 
+
 
 
 if __name__ == "__main__":
 	import time
 	start = time.time()
-	print ("Preprocessing the training_data--")
-	imdb_data_preprocess(inpath=train_path, mix=True)
-	print ("Done with preprocessing. Now, will retreieve the training data in the required format")
+	print ("Preprocessing the training data...")
+	imdb_data_preprocess(inpath=training_dataset, mix=True)
+	print ("Preprocessing of the training datais complete. Retreiving the training data...")
 	[Xtrain_text, Ytrain] = retrieve_data()
-	print ("Retrieved the training data. Now will retrieve the test data in the required format")
-	Xtest_text = retrieve_data(name=test_path, train=False)
-	print ("Retrieved the test data. Now will initialize the model \n\n")
+	print ("Retrieved the training data. Retreiving the testing data...")
+	Xtest_text = retrieve_data(name=testing_dataset, train=False)
+	print ("Retrieved the test data. Initializing the model...\n\n")
+    
 
 
-	print ("-----------------------ANALYSIS ON THE INSAMPLE DATA (TRAINING DATA)---------------------------")
+	print ("-----------------------ANALYSIS ON TRAINING DATA---------------------------")
 	uni_vectorizer = unigram_process(Xtrain_text)
 	print ("Fitting the unigram model")
 	Xtrain_uni = uni_vectorizer.transform(Xtrain_text)
-	print ("After fitting ")
-	#print ("Applying the stochastic descent")
-	#Y_uni = stochastic_descent(Xtrain_uni, Ytrain, Xtrain_uni)
-	#print ("Done with  stochastic descent")
-	#print ("Accuracy for the Unigram Model is ", accuracy(Ytrain, Y_uni))
+	print ("Fitting of the unigram model complete.")
+	print ("Applying the stochastic descent")
+	Y_uni = stochastic_descent(Xtrain_uni, Ytrain, Xtrain_uni)
+	print ("Stochastic descent applied")
+	print ("Accuracy for the Unigram Model is ", accuracy(Ytrain, Y_uni))
 	print ("\n")
 
 	bi_vectorizer = bigram_process(Xtrain_text)
 	print ("Fitting the bigram model")
 	Xtrain_bi = bi_vectorizer.transform(Xtrain_text)
-	print ("After fitting ")
-	#print ("Applying the stochastic descent")
-	#Y_bi = stochastic_descent(Xtrain_bi, Ytrain, Xtrain_bi)
-	#print ("Done with  stochastic descent")
-	#print ("Accuracy for the Bigram Model is ", accuracy(Ytrain, Y_bi))
+	print ("Fitting of the bigram model complete")
+	print ("Applying the stochastic descent")
+	Y_bi = stochastic_descent(Xtrain_bi, Ytrain, Xtrain_bi)
+	print ("Stochastic descent applied")
+	print ("Accuracy for the Bigram Model is ", accuracy(Ytrain, Y_bi))
 	print ("\n")
 
 	uni_tfidf_transformer = tfidf_process(Xtrain_uni)
 	print ("Fitting the tfidf for unigram model")
 	Xtrain_tf_uni = uni_tfidf_transformer.transform(Xtrain_uni)
-	print ("After fitting TFIDF")
-	#print ("Applying the stochastic descent")
-	#Y_tf_uni = stochastic_descent(Xtrain_tf_uni, Ytrain, Xtrain_tf_uni)
-	#print ("Done with  stochastic descent")
-	#print ("Accuracy for the Unigram TFIDF Model is ", accuracy(Ytrain, Y_tf_uni))
+	print ("Fitting of the tfidf for unigram model complete")
+	print ("Applying the stochastic descent")
+	Y_tf_uni = stochastic_descent(Xtrain_tf_uni, Ytrain, Xtrain_tf_uni)
+	print ("Stochastic descent applied")
+	print ("Accuracy for the Unigram TFIDF Model is ", accuracy(Ytrain, Y_tf_uni))
 	print ("\n")
 
 
 	bi_tfidf_transformer = tfidf_process(Xtrain_bi)
 	print ("Fitting the tfidf for bigram model")
 	Xtrain_tf_bi = bi_tfidf_transformer.transform(Xtrain_bi)
-	print ("After fitting TFIDF")
-	#print ("Applying the stochastic descent")
-	#Y_tf_bi = stochastic_descent(Xtrain_tf_bi, Ytrain, Xtrain_tf_bi)
-	#print ("Done with  stochastic descent")
-	#print ("Accuracy for the Unigram TFIDF Model is ", accuracy(Ytrain, Y_tf_bi))
+	print ("Fitting of the tfidf for bigram model complete")
+	print ("Applying the stochastic descent")
+	Y_tf_bi = stochastic_descent(Xtrain_tf_bi, Ytrain, Xtrain_tf_bi)
+	print ("Stochastic descent applied")
+	print ("Accuracy for the Unigram TFIDF Model is ", accuracy(Ytrain, Y_tf_bi))
 	print ("\n")
 
 
-	print ("-----------------------ANALYSIS ON THE TEST DATA ---------------------------")
+	print ("-----------------------ANALYSIS ON THE TESTING DATA ---------------------------")
 	print ("Unigram Model on the Test Data--")
 	Xtest_uni = uni_vectorizer.transform(Xtest_text)
 	print ("Applying the stochastic descent")
 	Ytest_uni = stochastic_descent(Xtrain_uni, Ytrain, Xtest_uni)
-	write_txt(Ytest_uni, name="unigram.output.txt")
-	print ("Done with  stochastic descent")
+	write_txt(Ytest_uni, name="unigram.output.csv")
+	print ("Stochastic descent applied")
 	print ("\n")
 
 
@@ -234,25 +238,26 @@ if __name__ == "__main__":
 	Xtest_bi = bi_vectorizer.transform(Xtest_text)
 	print ("Applying the stochastic descent")
 	Ytest_bi = stochastic_descent(Xtrain_bi, Ytrain, Xtest_bi)
-	write_txt(Ytest_bi, name="bigram.output.txt")
-	print ("Done with  stochastic descent")
+	write_txt(Ytest_bi, name="bigram.output.csv")
+	print ("Stochastic descent applied")
 	print ("\n")
 
 	print ("Unigram TF Model on the Test Data--")
 	Xtest_tf_uni = uni_tfidf_transformer.transform(Xtest_uni)
 	print ("Applying the stochastic descent")
 	Ytest_tf_uni = stochastic_descent(Xtrain_tf_uni, Ytrain, Xtest_tf_uni)
-	write_txt(Ytest_tf_uni, name="unigramtfidf.output.txt")
-	print ("Done with  stochastic descent")
+	write_txt(Ytest_tf_uni, name="unigramtfidf.output.csv")
+	print ("Stochastic descent applied")
 	print ("\n")
 
 	print ("Bigram TF Model on the Test Data--")
 	Xtest_tf_bi = bi_tfidf_transformer.transform(Xtest_bi)
 	print ("Applying the stochastic descent")
 	Ytest_tf_bi = stochastic_descent(Xtrain_tf_bi, Ytrain, Xtest_tf_bi)
-	write_txt(Ytest_tf_bi, name="bigramtfidf.output.txt")
-	print ("Done with  stochastic descent")
+	write_txt(Ytest_tf_bi, name="bigramtfidf.output.csv")
+	print ("Stochastic descent applied")
 	print ("\n")
 
+    
 	print ("Total time taken is ", time.time()-start, " seconds")
 	pass
