@@ -15,6 +15,7 @@ There are two main directories (train/ and test/) which corresponds to training 
 
 Environment:
 Python 3
+
 Libraries: Pandas, Scikit,Numpy
 
 Step 1: Reading and preprocessing the data:
