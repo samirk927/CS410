@@ -205,7 +205,7 @@ if __name__ == "__main__":
     print ("Applying the stochastic descent")
     Y_tf_bi = stochastic_descent(Xtrain_tf_bi, Ytrain, Xtrain_tf_bi)
     print ("Stochastic descent applied")
-    print ("Accuracy for the Unigram TFIDF Model is ", accuracy(Ytrain, Y_tf_bi))
+    print ("Accuracy for the Bigram TFIDF Model is ", accuracy(Ytrain, Y_tf_bi))
     print ("\n")
 
 
