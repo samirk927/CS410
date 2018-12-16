@@ -7,4 +7,7 @@ Dataset for this project has been gather from:
 Source:
 http://ai.stanford.edu/~amaas/data/sentiment/
 
-The dataset is compiled from a collection of 50,000 reviews from IMDB on the condition there are no more than 30 reviews per movie. The numbers of positive and negative reviews are equal. Negative reviews have scores less or equal than 4 out of 10 while a positive review have score greater or equal than 7 out of 10. Neutral reviews are not included. The 50,000 reviews are divided evenly into the training and test set.
+The dataset contains 50,000 reviews from IMDB which are divided evenly into 25K training and 25K testing dataset. For the purpose of this project the testing dataset has been created by removing the polarity from the training dataset. On the entire collection, no more than 30 reviews are allowed per movie. Any movie with a rating score of <=4 is considered as negative and >=7 as positive. Neutral ratings(rating 5 and 6) are not considered.
+
+Files
+There are two main directories (train/ and test/) which corresponds to training and testing dataset. They include both positive and negative reviews. 
