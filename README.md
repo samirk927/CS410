@@ -3,7 +3,7 @@ IMDB Review Sentiment Analysis
 
 IMDB or Internet Movie Database provides diverse information on Movies, TV series and their associated cast, crew, biographies, trivia etc. One of the most interesting and important information that it provides is reviews and ratings. The objective of this project is to train the model and predict the sentiment on the testing dataset.
 
-Dataset for this project has been gather from:
+Dataset for this project has been gathered from:
 Source:
 http://ai.stanford.edu/~amaas/data/sentiment/
 
@@ -12,6 +12,10 @@ The dataset contains 50,000 reviews from IMDB which are divided evenly into 25K 
 Files
 
 There are two main directories (train/ and test/) which corresponds to training and testing dataset. They include both positive and negative reviews. 
+
+Environment:
+Python 3
+Libraries: Pandas, Scikit,Numpy
 
 Step 1: Reading and preprocessing the data:
 
@@ -48,7 +52,7 @@ Sample from bigram.output.csv, where the polarity has been predicted based on th
 
 
 Step 7: The code file:
-Code file:
+Run:
 https://github.com/samirk927/CS410/blob/master/IMDBSentimentAnalysis.py
 
 
