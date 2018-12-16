@@ -20,6 +20,7 @@ Training dataset is created as part of preprocessing where the stop words are re
 
 For the purposes of this project, testing dataset is created from the training dataset after removing polarity.
 •	testing_dataset = "./aclImdb/test/testing_dataset.csv" 
+
 Step 2- Algorithms used:
 For the purposed of this project unigram, bigram and tfidf algorithms are used to analyze the data.
 
@@ -33,6 +34,7 @@ Accuracy for the Bigram Model is 93.556
 Accuracy for the Unigram TFIDF Model is 88.264
 Accuracy for the Bigram TFIDF Model is 86.348
 
+
 Step 5- Applying the classifier on testing data:
 Four files are outputted:
 1.	bigram.output.csv
@@ -40,12 +42,15 @@ Four files are outputted:
 3.	unigram.output.csv
 4.	unigramtfidf.output.csv 
 
+
+Step 6- Reviewing the results:
+Sample from bigram.output.csv, where the polarity has been predicted based on the testing data. 
+
+
 Step 7: The code file:
 Code file:
 https://github.com/samirk927/CS410/blob/master/IMDBSentimentAnalysis.py
 
-Step 6- Reviewing the results:
-Sample from bigram.output.csv, where the polarity has been predicted based on the testing data. 
 
 Performance:
 In my testing with 25K training and 25K testing dataset, the code ran for ~75 seconds.
