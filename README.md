@@ -16,34 +16,46 @@ There are two main directories (train/ and test/) which corresponds to training 
 Environment:
 Python 3
 
-Libraries: Pandas, Scikit,Numpy
+Libraries: 
+
+Pandas, Scikit,Numpy
 
 Step 1: Reading and preprocessing the data:
 
 Training dataset is created as part of preprocessing where the stop words are removed and stored in training dataset path:
+
 •	training_dataset = "./aclImdb/train/" # source data
 
 Testing dataset is created as part of preprocessing where the stop words and polarity are removed and stored in testing dataset path:
+
 •	testing_dataset = "./aclImdb/test/" 
 
 Step 2- Algorithms used:
+
 For the purposed of this project unigram, bigram and tfidf algorithms are used to analyze the data.
 
 Step 3- Classifier 
+
 Stochastic Gradient Descent classifier is used in this project to minimize the processing expense instead of gradient descent, as gradient descent tends to be expensive on large dataset. 
 
 
 Step 4-Analysis on training data:
 
 Accuracy of unigram model is 92.604
+
 Accuracy for the Bigram Model is 93.952
+
 Accuracy for the Unigram TFIDF Model is 88.344
+
 Accuracy for the Bigram TFIDF Model is 86.16
 
 
 
+
 Step 5- Applying the classifier on testing data:
+
 Four files are outputted:
+
 1.	bigram.output.csv
 2.	bigramtfidf.output.csv
 3.	unigram.output.csv
@@ -51,15 +63,19 @@ Four files are outputted:
 
 
 Step 6- Reviewing the results:
+
 Sample from bigram.output.csv, where the polarity has been predicted based on the testing data. 
 
 
 Step 7: The code file:
+
 Run:
+
 https://github.com/samirk927/CS410/blob/master/IMDBSentimentAnalysis.py
 
 
 Performance:
+
 In my testing with 25K training and 25K testing dataset, the code ran for ~100 seconds.
 
 
