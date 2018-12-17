@@ -7,7 +7,7 @@ Dataset for this project has been gathered from:
 Source:
 http://ai.stanford.edu/~amaas/data/sentiment/
 
-The dataset contains 50,000 reviews from IMDB which are divided evenly into 25K training and 25K testing dataset. For the purpose of this project the testing dataset has been created by removing the polarity from the training dataset. On the entire collection, no more than 30 reviews are allowed per movie. Any movie with a rating score of <=4 is considered as negative and >=7 as positive. Neutral ratings(rating 5 and 6) are not considered.
+The dataset contains 50,000 reviews from IMDB which are divided evenly into 25K training and 25K testing dataset. On the entire collection, no more than 30 reviews are allowed per movie. Any movie with a rating score of <=4 is considered as negative and >=7 as positive. Neutral ratings(rating 5 and 6) are not considered.
 
 Files
 
@@ -23,8 +23,8 @@ Step 1: Reading and preprocessing the data:
 Training dataset is created as part of preprocessing where the stop words are removed and stored in training dataset path:
 •	training_dataset = "./aclImdb/train/" # source data
 
-For the purposes of this project, testing dataset is created from the training dataset after removing polarity.
-•	testing_dataset = "./aclImdb/test/testing_dataset.csv" 
+Testing dataset is created as part of preprocessing where the stop words and polarity are removed and stored in testing dataset path:
+•	testing_dataset = "./aclImdb/test/" 
 
 Step 2- Algorithms used:
 For the purposed of this project unigram, bigram and tfidf algorithms are used to analyze the data.
@@ -58,7 +58,7 @@ https://github.com/samirk927/CS410/blob/master/IMDBSentimentAnalysis.py
 
 
 Performance:
-In my testing with 25K training and 25K testing dataset, the code ran for ~75 seconds.
+In my testing with 25K training and 25K testing dataset, the code ran for ~100 seconds.
 
 
 
