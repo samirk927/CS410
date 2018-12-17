@@ -5,6 +5,7 @@ IMDB or Internet Movie Database provides diverse information on Movies, TV serie
 
 Dataset for this project has been gathered from:
 Source:
+
 http://ai.stanford.edu/~amaas/data/sentiment/
 
 The dataset contains 50,000 reviews from IMDB which are divided evenly into 25K training and 25K testing dataset. On the entire collection, no more than 30 reviews are allowed per movie. Any movie with a rating score of <=4 is considered as negative and >=7 as positive. Neutral ratings(rating 5 and 6) are not considered.
