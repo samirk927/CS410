@@ -96,7 +96,7 @@ Four files are outputted:
 Step 6- Reviewing the results:
 
 Sample from bigram.output.csv, where the polarity has been predicted based on the testing data. 
-
+(Please see https://github.com/samirk927/CS410/blob/master/Samir_KarmacharyaCS%20410%20Course%20Project.pdf)
 
 Step 7: The code file:
 
