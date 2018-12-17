@@ -19,14 +19,13 @@ from sklearn.linear_model import SGDClassifier
 
 
 
-training_dataset = r"/Users/samirkarmacharya/Documents/UIUC/CS410/Project/IMDB Dataset/aclImdb/train/" # source data
-''' create the testing_dataset from the trainig dataset but remove the polarity. '''
+training_dataset = r"/Users/samirkarmacharya/Documents/UIUC/CS410/Project/IMDB Dataset/aclImdb/train/"
 testing_dataset = r"/Users/samirkarmacharya/Documents/UIUC/CS410/Project/IMDB Dataset/aclImdb/test/" 
 
 
 '''
-IMDB_data_preprocess function explores the neg and pos folders from aclImdb/train and creates the training_dataset and testing_dataset csv combining both positive and negative 
-reviews after removing the stopwords.
+IMDB_data_preprocess function explores the neg and pos folders from aclImdb/train and aclImdb/test folders and creates the training_dataset and testing_dataset csv combining both positive and negative 
+reviews respectively. Training data is created after removing the stopwords, whereas testing data is created after removing stopwords and polarity.
 '''
 def imdb_data_preprocess(inpath, outpath="./", name="training_dataset.csv", mix=False, train_data = True):
 
