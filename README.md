@@ -34,10 +34,12 @@ Stochastic Gradient Descent classifier is used in this project to minimize the p
 
 
 Step 4-Analysis on training data:
-Accuracy of unigram model is 92.764
-Accuracy for the Bigram Model is 93.556
-Accuracy for the Unigram TFIDF Model is 88.264
-Accuracy for the Bigram TFIDF Model is 86.348
+
+Accuracy of unigram model is 92.604
+Accuracy for the Bigram Model is 93.952
+Accuracy for the Unigram TFIDF Model is 88.344
+Accuracy for the Bigram TFIDF Model is 86.16
+
 
 
 Step 5- Applying the classifier on testing data:
