@@ -20,7 +20,38 @@ Libraries:
 
 Pandas, Scikit,Numpy
 
+Overview of functions:
+
+1)	imdb_data_preprocess : Creates training dataset as part of preprocessing where the stop words are removed and stored in training dataset path:
+
+• training_dataset = "./aclImdb/train/" # source data
+Testing dataset is created as part of preprocessing where the stop words and polarity are removed and stored in testing dataset path:
+• testing_dataset = "./aclImdb/test/"
+
+2)	remove_stopwords : Removes the stopwords from the input sentence and returns the sentence.
+
+3)	 unigram_process : Takes the data as the input and returns a vectorizer of the unigram as output
+
+4)	bigram_process : Takes the data as the input and returns a vectorizer of the bigram as output
+
+5)	tfidf_process : Takes the data as the input and returns a vectorizer of the tfidf as output
+
+6)	retrieve_data : Takes a CSV file as the input and returns the corresponding arrays of labels and data as output
+
+7)	stochastic_descent : Applies Stochastic descent on the training data and returns the predicted labels
+
+8)	accuracy : Finds the accuracy in percentage given the training and test labels
+
+9)	write_txt : Takes training/testing data as input and writes to a csv file.
+
+
 Step 1: Reading and preprocessing the data:
+
+Download the data from mentioned source and unzip.
+
+Download the stopwords.txt from:
+
+https://github.com/samirk927/CS410
 
 Training dataset is created as part of preprocessing where the stop words are removed and stored in training dataset path:
 
