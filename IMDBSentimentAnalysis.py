@@ -18,9 +18,9 @@ from sklearn.linear_model import SGDClassifier
 
 
 
-
-training_dataset = r"/Users/samirkarmacharya/Documents/UIUC/CS410/Project/IMDB Dataset/aclImdb/train/"
-testing_dataset = r"/Users/samirkarmacharya/Documents/UIUC/CS410/Project/IMDB Dataset/aclImdb/test/" 
+#provide path of training/testing dataset
+training_dataset = r"./aclImdb/train/" #path of training dataset
+testing_dataset = r"./aclImdb/test/" #path or testing dataset
 
 
 '''
@@ -178,7 +178,7 @@ if __name__ == "__main__":
     
 
 
-    print ("-----------------------ANALYSIS ON TRAINING DATA---------------------------")
+    print ("Begin Analysis on Training Data...")
     uni_vectorizer = unigram_process(Xtrain_text)
     print ("Fitting the unigram model")
     Xtrain_uni = uni_vectorizer.transform(Xtrain_text)
@@ -221,7 +221,7 @@ if __name__ == "__main__":
     print ("\n")
 
 
-    print ("-----------------------ANALYSIS ON THE TESTING DATA ---------------------------")
+    print ("Begin Analysis on Testing Data...")
     print ("Unigram Model on the Test Data--")
     Xtest_uni = uni_vectorizer.transform(Xtest_text)
     print ("Applying the stochastic descent")
