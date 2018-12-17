@@ -21,17 +21,17 @@ from sklearn.linear_model import SGDClassifier
 
 training_dataset = r"/Users/samirkarmacharya/Documents/UIUC/CS410/Project/IMDB Dataset/aclImdb/train/" # source data
 ''' create the testing_dataset from the trainig dataset but remove the polarity. '''
-testing_dataset = r"/Users/samirkarmacharya/Documents/UIUC/CS410/Project/IMDB Dataset/aclImdb/test/testing_dataset.csv" 
+testing_dataset = r"/Users/samirkarmacharya/Documents/UIUC/CS410/Project/IMDB Dataset/aclImdb/test/" 
 
 
 '''
-IMDB_data_preprocess function explores the neg and pos folders from aclImdb/train and creates a training_dataset csv combining both positive and negative 
+IMDB_data_preprocess function explores the neg and pos folders from aclImdb/train and creates the training_dataset and testing_dataset csv combining both positive and negative 
 reviews after removing the stopwords.
 '''
-def imdb_data_preprocess(inpath, outpath="./", name="training_dataset.csv", mix=False):
+def imdb_data_preprocess(inpath, outpath="./", name="training_dataset.csv", mix=False, train_data = True):
 
 
-    stopwords = open("stopwords.en.txt", 'r' , encoding="ISO-8859-1").read()
+    stopwords = open("stopwords.txt", 'r' , encoding="ISO-8859-1").read()
     stopwords = stopwords.split("\n")
 
     indices = []
@@ -40,12 +40,14 @@ def imdb_data_preprocess(inpath, outpath="./", name="training_dataset.csv", mix=
 
     i =  0 
 
+
     for filename in os.listdir(inpath+"pos"):
         data = open(inpath+"pos/"+filename, 'r' , encoding="ISO-8859-1").read()
         data = remove_stopwords(data, stopwords)
         indices.append(i)
         text.append(data)
-        rating.append("1")
+        if train_data:
+            rating.append("1")
         i = i + 1
 
     for filename in os.listdir(inpath+"neg"):
@@ -53,16 +55,23 @@ def imdb_data_preprocess(inpath, outpath="./", name="training_dataset.csv", mix=
         data = remove_stopwords(data, stopwords)
         indices.append(i)
         text.append(data)
-        rating.append("0")
+        if train_data:
+            rating.append("0")
         i = i + 1
 
-    Dataset = list(zip(indices,text,rating))
+    if train_data:
+        Dataset = list(zip(indices,text,rating))
+    else:
+        Dataset = list(zip(indices,text))
     
     if mix:
         np.random.shuffle(Dataset)
-
-    df = pd.DataFrame(data = Dataset, columns=['row_Number', 'text', 'polarity'])
-    df.to_csv(outpath+name, index=False, header=True)
+    if train_data:
+        df = pd.DataFrame(data = Dataset, columns=['row_Number', 'text', 'polarity'])
+        df.to_csv(outpath+name, index=False, header=True)
+    else:
+        df = pd.DataFrame(data = Dataset, columns=['row_Number', 'text'])
+        df.to_csv(outpath+name, index=False, header=True)
 
     pass
 
@@ -112,6 +121,8 @@ def retrieve_data(name="training_dataset.csv", train=True):
 
     return X        
 
+
+
 '''
 STOCHASTIC_DESCENT applies Stochastic on the training data and returns the predicted labels 
 Xtrain - Training Data
@@ -142,8 +153,8 @@ def accuracy(Ytrain, Ytest):
 
 
 '''Write_txt function reads the testing data and outputs a csv file with
-columns: ID, Reiview, Polarity'''
-def write_txt(data, name, inpath = testing_dataset):
+columns, ID, Reiview, Polarity'''
+def write_txt(data, name, inpath = "./testing_dataset.csv"):
     import pandas as pd
     #data = ''.join(str(word) for word in data)
     DataFrame = pd.read_csv(inpath,header=0, encoding = 'ISO-8859-1')
@@ -160,8 +171,10 @@ if __name__ == "__main__":
     imdb_data_preprocess(inpath=training_dataset, mix=True)
     print ("Preprocessing of the training datais complete. Retreiving the training data...")
     [Xtrain_text, Ytrain] = retrieve_data()
-    print ("Retrieved the training data. Retreiving the testing data...")
-    Xtest_text = retrieve_data(name=testing_dataset, train=False)
+    print ("Retrieved the training data. Creating the testing data...")
+    imdb_data_preprocess(inpath=testing_dataset,outpath="./", name="testing_dataset.csv", mix=False, train_data=False)
+    print("Created test data. Retreiving testing data....")
+    Xtest_text = retrieve_data(name="testing_dataset.csv", train=False)
     print ("Retrieved the test data. Initializing the model...\n\n")
     
 
@@ -205,7 +218,7 @@ if __name__ == "__main__":
     print ("Applying the stochastic descent")
     Y_tf_bi = stochastic_descent(Xtrain_tf_bi, Ytrain, Xtrain_tf_bi)
     print ("Stochastic descent applied")
-    print ("Accuracy for the Bigram TFIDF Model is ", accuracy(Ytrain, Y_tf_bi))
+    print ("Accuracy for the Unigram TFIDF Model is ", accuracy(Ytrain, Y_tf_bi))
     print ("\n")
 
 
